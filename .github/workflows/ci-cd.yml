@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
   create:
-    tags: ['v*.*.*']  # Dispara también en tags semánticos
+    tags: ['v*.*.*']
 
 jobs:
   build:
