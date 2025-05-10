@@ -6,11 +6,12 @@ on:
   pull_request:
     branches: [ main ]
   create:
-    tags: ['v*.*.*']
+    tags: ['v*.*.*']  # Dispara también en tags semánticos
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     services:
       db:
         image: mysql:8
@@ -62,7 +63,7 @@ jobs:
           echo "Web did not start in time" >&2
           exit 1
 
-      - name: Smoke test: homepage
+      - name: Smoke test homepage
         run: curl -sSf http://localhost:8080/index.php
 
       - name: Build & push Docker image
