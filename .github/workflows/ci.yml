@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     services:
       db:
         image: mysql:8
@@ -24,48 +25,48 @@ jobs:
           --health-retries=5
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-    - name: Setup PHP & Composer
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.1'
-        extensions: mysqli, pdo_mysql
-        tools: composer
+      - name: Setup PHP & Composer
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mysqli, pdo_mysql
+          tools: composer
 
-    - name: Install PHP dependencies
-      if: ${{ exists('composer.json') }}
-      run: composer install --no-progress --no-interaction
+      - name: Install PHP dependencies
+        if: ${{ exists('composer.json') }}
+        run: composer install --no-progress --no-interaction
 
-    - name: Install Docker Compose
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker-compose-plugin
+      - name: Install Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose-plugin
 
-    - name: Build & start services
-      run: docker compose up -d --build
+      - name: Build & start services
+        run: docker compose up -d --build
 
-    - name: Wait for web
-      run: |
-        for i in {1..10}; do
-          if curl -s http://localhost:8080 >/dev/null; then
-            echo "Web is up!"
-            exit 0
-          fi
-          sleep 5
-        done
-        echo "Web did not start in time" >&2
-        exit 1
+      - name: Wait for web
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8080 >/dev/null; then
+              echo "Web is up!"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Web did not start in time" >&2
+          exit 1
 
-    - name: Smoke test: homepage
-      run: curl -sSf http://localhost:8080/index.php
+      - name: Smoke test: homepage
+        run: curl -sSf http://localhost:8080/index.php
 
-    - name: Notify Slack         # <— OJO: este guión faltaba en tu versión
-      if: always()
-      uses: Ilshidur/action-slack@v2
-      with:
-        status: ${{ job.status }}
-        fields: repo,message,commit
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Notify Slack
+        if: always()
+        uses: Ilshidur/action-slack@v2
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
