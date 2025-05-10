@@ -85,9 +85,6 @@ jobs:
         if: always()
         uses: rtCamp/action-slack-notify@v2
         with:
-          webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          message: |
-            *Workflow:* ${{ github.workflow }}
-            *Status:* ${{ job.status }}
-            *Repo:* ${{ github.repository }}
-            *Commit:* ${{ github.sha }}
+          webhook: ${{ secrets.SLACK_WEBHOOK }}
+          # Opcional: especifica canal, o déjalo vacío para usar el predeterminado del webhook
+          channel: ''
