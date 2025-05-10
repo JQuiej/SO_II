@@ -3,6 +3,7 @@
 ob_start();
 session_start();
 
+
 // Si no hay rol en sesión, redirige al login
 if (!isset($_SESSION['rol'])) {
     $_SESSION['rol'] = 'usuario';
