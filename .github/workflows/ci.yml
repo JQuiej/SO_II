@@ -59,7 +59,7 @@ jobs:
           echo "Web did not start in time" >&2
           exit 1
 
-      - name: Smoke test: homepage
+      - name: Smoke test homepage
         run: curl -sSf http://localhost:8080/index.php
 
       - name: Notify Slack
