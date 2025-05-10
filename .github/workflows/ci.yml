@@ -36,10 +36,14 @@ jobs:
           tools: composer
 
       - name: Install PHP dependencies
-        if: ${{ exists('composer.json') }}
-        run: composer install --no-progress --no-interaction
+        run: |
+          if [ -f composer.json ]; then
+            composer install --no-progress --no-interaction
+          else
+            echo "No composer.json — skipping install"
+          fi
 
-      - name: Install Docker Compose
+      - name: Install Docker Compose plugin
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose-plugin
@@ -59,7 +63,7 @@ jobs:
           echo "Web did not start in time" >&2
           exit 1
 
-      - name: Smoke test: homepage
+      - name: Smoke test homepage
         run: curl -sSf http://localhost:8080/index.php
 
       - name: Notify Slack
