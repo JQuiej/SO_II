@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ./uploads:/var/www/html/uploads
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=login_registro_db
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=secret
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=login_registro_db
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
