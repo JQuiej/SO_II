@@ -26,10 +26,10 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
 
       - name: Setup PHP & Composer
-        uses: shivammathur/setup-php@shivammathur
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           extensions: mysqli, pdo_mysql
@@ -68,7 +68,7 @@ jobs:
 
       - name: Notify Slack
         if: always()
-        uses: Ilshidur/action-slack@main
+        uses: Ilshidur/action-slack@v1
         with:
           status: ${{ job.status }}
           fields: repo,message,commit

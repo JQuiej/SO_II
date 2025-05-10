@@ -28,10 +28,10 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
 
       - name: Setup PHP & Composer
-        uses: shivammathur/setup-php@main
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
           extensions: mysqli, pdo_mysql
@@ -54,7 +54,7 @@ jobs:
       - name: Wait for web
         run: |
           for i in {1..10}; do
-            if curl -s http://localhost:8080/index.php >/dev/null; then
+            if curl -sSf http://localhost:8080/index.php >/dev/null; then
               echo "Web is up!"
               exit 0
             fi
@@ -63,7 +63,7 @@ jobs:
           echo "Web did not start in time" >&2
           exit 1
 
-      - name: Smoke test homepage
+      - name: Smoke test: homepage
         run: curl -sSf http://localhost:8080/index.php
 
       - name: Build & push Docker image
@@ -78,7 +78,7 @@ jobs:
 
       - name: Notify Slack
         if: always()
-        uses: Ilshidur/action-slack@main
+        uses: Ilshidur/action-slack@v1
         with:
           status: ${{ job.status }}
           fields: repo,message,commit
