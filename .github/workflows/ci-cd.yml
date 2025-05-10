@@ -78,7 +78,7 @@ jobs:
 
       - name: Notify Slack
         if: always()
-        uses: Ilshidur/action-slack@v2
+        uses: Ilshidur/action-slack@main
         with:
           status: ${{ job.status }}
           fields: repo,message,commit
