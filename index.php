@@ -1,5 +1,7 @@
 <?php
 session_start();
+session_regenerate_id(true);
+include 'conexion_be.php';
 
 if (isset($_SESSION['usuario'])) {
     header('Location: php/bienvenida.php');
