@@ -1,0 +1,15 @@
+# PHP / Composer
+vendor/
+composer.lock
+
+# Docker
+*.env
+.env
+docker-compose.override.yml
+
+# Uploads
+uploads/
+
+# IDEs
+.idea/
+*.swp

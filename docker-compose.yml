@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"          # Cambia 8080 si está ocupado (p.ej. "3001:80")
+    volumes:
+      - ./:/var/www/html   # Monta tu código en el contenedor
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: login_registro_db
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql:ro  # Carga tu dump al arrancar
+    ports:
+      - "3306:3306"        # Si 3306 está ocupado, cámbialo a "3307:3306"
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+
+networks:
+  app-network:

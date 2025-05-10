@@ -1,0 +1,122 @@
+/* Fondo global */
+body {
+    margin: 0;
+    padding: 5px;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    text-align: center;
+    /* Primer gradiente semitransparente + fondo JPG */
+    background:linear-gradient(rgba(255,255,255,0.14), rgba(255,255,255,0.41)),  
+    url(../images/bground3.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    color: #fff;
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+/* Contenedor principal */
+.container {
+    background: linear-gradient(to bottom, rgb(46, 59, 204), rgb(127, 51, 199));
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Título principal */
+h2 {
+    color: #fff;
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Avatar */
+img.avatar {
+    width: 120px;
+    border-radius: 50%;
+    margin-bottom: 30px;
+    border: 3px solid #fff;
+}
+
+/* Etiquetas */
+label {
+    display: block;
+    margin-top: 15px;
+    text-align: left;
+    color: #fff;
+}
+
+/* Formulario */
+form {
+    max-width: 400px;
+    background: rgba(19, 38, 147, 0.95);
+    padding: 25px;
+    border-radius: 12px;
+    margin: 0 auto;
+}
+
+/* Inputs y selects */
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* Botón */
+button, a.button-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: linear-gradient(to bottom, rgb(41, 38, 178), rgb(57, 130, 213));
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+button:hover, a.button-link:hover {
+    background: linear-gradient(to bottom, rgb(46, 59, 204), rgb(127, 51, 199));
+}
+
+/* Mensajes */
+.mensaje {
+    margin: 20px 0;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.success {
+    background: linear-gradient(to bottom, rgb(147, 51, 211), rgb(57, 130, 213));
+    color: #fff;
+}
+
+.error {
+    background: #e74c3c;
+    color: #fff;
+}
+
+/* Enlaces */
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+p {
+    text-align: center;
+    margin-top: 20px;
+}
