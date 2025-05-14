@@ -13,9 +13,9 @@ if (!isset($_SESSION['rol'])) {
 
 include 'conexion_be.php';
 
-// Obtenemos el nombre completo, avatar y teléfono del usuario logueado
+// Recupera datos de usuario
 $usuario = $_SESSION['usuario'];
-$query   = "SELECT nombre_completo, avatar_url, telefono FROM usuarios WHERE usuario = ?";
+$query   = "SELECT nombre_completo, avatar_url, telefono, rol FROM usuarios WHERE usuario = ?";
 $stmt    = mysqli_prepare($conexion, $query);
 mysqli_stmt_bind_param($stmt, "s", $usuario);
 mysqli_stmt_execute($stmt);
@@ -28,8 +28,15 @@ $telefono        = "";
 
 if ($fila = mysqli_fetch_assoc($resultado)) {
     $nombre_completo = $fila['nombre_completo'];
-    $avatar_url      = $fila['avatar_url'];   // p.ej. "uploads/imagen.jpg"
+    $avatar_url      = $fila['avatar_url'];   // e.g. "uploads/imagen.jpg"
     $telefono        = $fila['telefono'];
+    $rol             = $fila['rol'];
+} else {
+    // Por si algo raro sucede
+    $nombre_completo = "Invitado";
+    $avatar_url      = null;
+    $telefono        = "";
+    $rol             = "usuario";
 }
 
 mysqli_close($conexion);

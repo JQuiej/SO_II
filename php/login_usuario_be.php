@@ -35,15 +35,19 @@ if ($res && mysqli_num_rows($res) === 1) {
         $_SESSION['rol']     = $fila['rol'];
         $_SESSION['id']      = $fila['id'];
 
-        // Registro en historial (ya tu tabla debe tener AUTO_INCREMENT en id)
+// ahora registramos en historial con una prepared statement
         $accion = "Inició sesión";
-        mysqli_query(
-          $conexion,
-          "INSERT INTO historial (usuario, accion) VALUES ('{$fila['usuario']}', '$accion')"
+        $stmtHist = mysqli_prepare(
+        $conexion,
+        "INSERT INTO historial (`usuario`,`accion`) VALUES (?, ?)"
         );
+        mysqli_stmt_bind_param($stmtHist, "ss", $fila['usuario'], $accion);
+        mysqli_stmt_execute($stmtHist);
+        mysqli_stmt_close($stmtHist);
 
+        // y redirigimos…
         header("Location: ../php/bienvenida.php");
-        exit();
+    exit();
     } else {
         header("Location: ../index.php?error=Contraseña+incorrecta");
         exit();
