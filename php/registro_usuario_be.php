@@ -68,10 +68,12 @@ if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === 0) {
 
 // Hashear contraseña
 $contrasena_segura = password_hash($contrasena, PASSWORD_DEFAULT);
-
+$result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM usuarios");
+$row    = mysqli_fetch_assoc($result);
+$nextId = $row['next_id'];
 // Insertar usuario
-$insertar = mysqli_prepare($conexion, "INSERT INTO usuarios (nombre_completo, correo, usuario, contrasena, telefono, avatar_url) VALUES (?, ?, ?, ?, ?, ?)");
-mysqli_stmt_bind_param($insertar, "ssssss", $nombre_completo, $correo, $usuario, $contrasena_segura, $telefono, $avatar_url);
+$insertar = mysqli_prepare($conexion, "INSERT INTO usuarios (id, nombre_completo, correo, usuario, contrasena, telefono, avatar_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+mysqli_stmt_bind_param($insertar, "issssss",$nextId, $nombre_completo, $correo, $usuario, $contrasena_segura, $telefono, $avatar_url);
 mysqli_stmt_execute($insertar);
 
 if (mysqli_stmt_affected_rows($insertar) > 0) {
