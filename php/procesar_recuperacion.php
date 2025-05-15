@@ -24,7 +24,15 @@ $result = mysqli_stmt_get_result($stmt);
 
 // 4. Si no hay fila, redirige con error
 if (! $usuario = mysqli_fetch_assoc($result)) {
-    header('Location: ../index.php?error=correo_no_encontrado');
+      Swal.fire({
+      icon: 'info',
+      title: 'no se encontró el correo',
+      html: 'No se encontró el correo electrónico.<br><br>' +
+            'Si no tienes cuenta, puedes registrarte <a href=\"../index.php\">aquí</a>.',
+      confirmButtonText: 'Cerrar'
+    }).then(() => {
+      window.location.href = '../index.php';
+    });
     exit();
 }
 
