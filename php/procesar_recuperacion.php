@@ -24,6 +24,7 @@ $result = mysqli_stmt_get_result($stmt);
 
 // 4. Si no hay fila, redirige con error
 if (! $usuario = mysqli_fetch_assoc($result)) {
+    <script>
       Swal.fire({
       icon: 'info',
       title: 'no se encontró el correo',
@@ -33,6 +34,7 @@ if (! $usuario = mysqli_fetch_assoc($result)) {
     }).then(() => {
       window.location.href = '../index.php';
     });
+    </script>
     exit();
 }
 

@@ -1,4 +1,3 @@
-
 <?php
 $host     = getenv('RAILWAY_MYSQL_HOST');
 $port     = getenv('RAILWAY_MYSQL_PORT');
