@@ -22,21 +22,32 @@ mysqli_stmt_bind_param($stmt, 's', $correo);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
-// 4. Si no hay fila, redirige con error
+// 4. Si no hay fila, mostrar SweetAlert y redirigir
 if (! $usuario = mysqli_fetch_assoc($result)) {
-    <script>
-      Swal.fire({
-      icon: 'info',
-      title: 'no se encontró el correo',
-      html: 'No se encontró el correo electrónico.<br><br>' +
-            'Si no tienes cuenta, puedes registrarte <a href=\"../index.php\">aquí</a>.',
-      confirmButtonText: 'Cerrar'
+    // Salida completa de una página HTML con SweetAlert
+    echo '<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Correo no encontrado</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+  <script>
+    Swal.fire({
+      icon: "info",
+      title: "Correo no encontrado",
+      html: "No se encontró el correo electrónico.<br><br>Si no tienes cuenta, puedes registrarte <a href=\'../index.php\'>aquí</a>.",
+      confirmButtonText: "Cerrar"
     }).then(() => {
-      window.location.href = '../index.php';
+      window.location.href = "../index.php";
     });
-    </script>
+  </script>
+</body>
+</html>';
     exit();
 }
+
 
 // 5. Genera y guarda el token de recuperación
 $id    = $usuario['id'];
