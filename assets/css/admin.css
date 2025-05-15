@@ -129,7 +129,7 @@ table {
 }
 th, td { padding: 12px; border: 1px solid #ccc; text-align: center; }
         th { background-color:rgb(107, 27, 218); color: white; }
-        img.avatar { width: 50px; border-radius: 50%; }
+        img.avatar { width: 50px;height: 50px; border-radius: 50%; }
         .volver {
             display: inline-block;
             margin-top: 20px;
