@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion_be.php';
+include __DIR__ . '/conexion_be.php';
 
 if (!isset($_SESSION['usuario']) || $_SESSION['rol'] !== 'admin') {
     header("Location: index.php");

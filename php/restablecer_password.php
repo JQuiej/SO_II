@@ -1,5 +1,5 @@
 <?php
-include 'conexion_be.php';
+include __DIR__ . '/conexion_be.php';
 
 $token = $_GET['token'] ?? '';
 

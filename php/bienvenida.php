@@ -11,7 +11,7 @@ if (!isset($_SESSION['rol'])) {
     exit();
 }
 
-include 'conexion_be.php';
+include __DIR__ . '/conexion_be.php';
 
 // Recupera datos de usuario
 $usuario = $_SESSION['usuario'];

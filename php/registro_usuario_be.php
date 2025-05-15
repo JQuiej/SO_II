@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion_be.php';
+include __DIR__ . '/conexion_be.php';
 
 // Recibir datos
 $nombre_completo = $_POST['nombre_completo'] ?? '';

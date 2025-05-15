@@ -1,5 +1,5 @@
 <?php
-include 'conexion_be.php';
+include __DIR__ . '/conexion_be.php';
 
 // 1. Leer y normalizar el correo
 $correo = trim(strtolower($_POST['correo'] ?? ''));

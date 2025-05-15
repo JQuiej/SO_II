@@ -9,10 +9,10 @@ services:
     volumes:
       - ./uploads:/var/www/html/uploads
     environment:
-      - MYSQL_HOST=db
-      - MYSQL_DATABASE=login_registro_db
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=secret
+      - RAILWAY_MYSQL_HOST=db
+      - RAILWAY_MYSQL_DATABASE=login_registro_db
+      - RAILWAY_MYSQL_USER=root
+      - RAILWAY_MYSQL_PASSWORD=secret
 
   db:
     image: mysql:8.0

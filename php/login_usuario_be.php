@@ -3,7 +3,7 @@ session_start();
 // regeneramos ID justo después de arrancar sesión
 session_regenerate_id(true);
 
-include 'conexion_be.php';  // nuestra conexión “Railway”
+include __DIR__ . '/conexion_be.php';
 
 $usuario    = $_POST['usuario']    ?? '';
 $contrasena = $_POST['contrasena'] ?? '';

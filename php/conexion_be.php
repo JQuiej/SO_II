@@ -8,17 +8,16 @@ if ($conexion) {
 }*/
 
 <?php
-// conexion_be.php
-
-// Recupera los valores de las variables de entorno de Railway
 $host     = getenv('RAILWAY_MYSQL_HOST');
 $port     = getenv('RAILWAY_MYSQL_PORT');
 $user     = getenv('RAILWAY_MYSQL_USER');
-$password = getenv('RAILWAY_MYSQL_PASSWORD');
-$database = getenv('RAILWAY_MYSQL_DATABASE');
+$pass     = getenv('RAILWAY_MYSQL_PASSWORD');
+$dbName   = getenv('RAILWAY_MYSQL_DATABASE');
 
-// Intenta la conexión (el puerto se pasa como quinto parámetro)
-$conexion = mysqli_connect($host, $user, $password, $database, $port);
+$conexion = mysqli_connect($host, $user, $pass, $dbName, (int)$port);
+if (!$conexion) {
+    die('Error al conectar la BD: ' . mysqli_connect_error());
+}
 
 // Manejo de errores
 if (!$conexion) {

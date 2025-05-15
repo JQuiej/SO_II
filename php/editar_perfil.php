@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'conexion_be.php';
+include __DIR__ . '/conexion_be.php';
 
 if (!isset($_SESSION['usuario'])) {
     header("Location: ../index.php");
