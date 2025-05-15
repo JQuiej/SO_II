@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_usuario'], $_POST[
             $conexion,
             "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss",$nextId, $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "isss",$nextId, $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
     }
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
             $conexion,
             "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss",$nextId , $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "isss",$nextId , $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
     }
@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
             $conexion,
             "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss",$nextId,  $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "isss",$nextId,  $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
 
@@ -197,7 +197,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
             $conexion,
             "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss",$nextId, $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "isss",$nextId, $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
     }

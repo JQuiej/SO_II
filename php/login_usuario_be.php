@@ -46,7 +46,7 @@ if ($res && mysqli_num_rows($res) === 1) {
             $conexion,
             "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss",$nextId, $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "isss",$nextId, $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
 
