@@ -73,15 +73,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_stmt_bind_param($update, "ssss", $nuevo_nombre, $nuevo_telefono, $nuevo_avatar, $usuario);
     }
 
+    $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM historial");
+    $row    = mysqli_fetch_assoc($result);
+    $nextId = $row['next_id'];
+
     mysqli_stmt_execute($update);
     $accion = "Actualizó su perfil";
     $fecha = date('Y-m-d H:i:s');  // hora local
 
     $stmtHist = mysqli_prepare(
         $conexion,
-        "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+        "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
     );
-    mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+    mysqli_stmt_bind_param($stmtHist, "sss",$nextId, $fila['usuario'], $accion, $fecha);
     mysqli_stmt_execute($stmtHist);
     mysqli_stmt_close($stmtHist);
 

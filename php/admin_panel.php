@@ -29,6 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_usuario'], $_POST[
         $row = mysqli_fetch_assoc($res);
         $usuario_objetivo = $row['usuario'] ?? '(desconocido)';
 
+        // calculamos manualmente el próximo ID
+        $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM historial");
+        $row    = mysqli_fetch_assoc($result);
+        $nextId = $row['next_id'];
         // Actualizar rol
         $update = mysqli_prepare($conexion, "UPDATE usuarios SET rol = ? WHERE id = ?");
         mysqli_stmt_bind_param($update, "si", $nuevo_rol, $id_usuario);
@@ -41,9 +45,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_usuario'], $_POST[
 
         $stmtHist = mysqli_prepare(
             $conexion,
-            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+            "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "sss",$nextId, $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
     }
@@ -65,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
         mysqli_stmt_bind_param($eliminar, "i", $id_eliminar);
         mysqli_stmt_execute($eliminar);
 
+        $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM historial");
+        $row    = mysqli_fetch_assoc($result);
+        $nextId = $row['next_id'];
+
         // Insertar en historial
         $admin = $_SESSION['usuario'];
         $accion = "Eliminó al usuario $usuario_eliminado";
@@ -73,9 +81,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
         mysqli_query($conexion, "INSERT INTO historial (usuario, accion) VALUES ('$admin', '$accion')");
         $stmtHist = mysqli_prepare(
             $conexion,
-            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+            "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "sss",$nextId , $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
     }
@@ -91,15 +99,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
         mysqli_stmt_bind_param($update_estado, "si", $nuevo_estado, $id_estado);
         mysqli_stmt_execute($update_estado);
 
+        $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM historial");
+        $row    = mysqli_fetch_assoc($result);
+        $nextId = $row['next_id'];
+
         $admin = $_SESSION['usuario'];
         $accion = ($nuevo_estado === 'activo') ? "Activó cuenta del usuario ID $id_estado" : "Desactivó cuenta del usuario ID $id_estado";
         $fecha = date('Y-m-d H:i:s');  // hora local
 
         $stmtHist = mysqli_prepare(
             $conexion,
-            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+            "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "sss",$nextId,  $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
 
@@ -171,6 +183,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
         mysqli_stmt_bind_param($update_estado, "si", $nuevo_estado, $id_estado);
         mysqli_stmt_execute($update_estado);
 
+        // calculamos manualmente el próximo ID
+        $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM historial");
+        $row    = mysqli_fetch_assoc($result);
+        $nextId = $row['next_id'];
+
         // Registrar en historial
         $admin = $_SESSION['usuario'];
         $accion = ($nuevo_estado === 'activo') ? "Activó cuenta del usuario ID $id_estado" : "Desactivó cuenta del usuario ID $id_estado";
@@ -178,9 +195,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
 
         $stmtHist = mysqli_prepare(
             $conexion,
-            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+            "INSERT INTO historial (`id`,`usuario`,`accion`,`fecha`) VALUES (?, ?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_bind_param($stmtHist, "sss",$nextId, $fila['usuario'], $accion, $fecha);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
     }
