@@ -37,7 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_usuario'], $_POST[
         // Insertar en historial
         $admin = $_SESSION['usuario'];
         $accion = "Cambió rol de $usuario_objetivo a $nuevo_rol";
-        mysqli_query($conexion, "INSERT INTO historial (usuario, accion) VALUES ('$admin', '$accion')");
+        $fecha = date('Y-m-d H:i:s');  // hora local
+
+        $stmtHist = mysqli_prepare(
+            $conexion,
+            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+        );
+        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_execute($stmtHist);
+        mysqli_stmt_close($stmtHist);
     }
 }
 
@@ -60,7 +68,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['eliminar_id'])) {
         // Insertar en historial
         $admin = $_SESSION['usuario'];
         $accion = "Eliminó al usuario $usuario_eliminado";
+        $fecha = date('Y-m-d H:i:s');  // hora local
+
         mysqli_query($conexion, "INSERT INTO historial (usuario, accion) VALUES ('$admin', '$accion')");
+        $stmtHist = mysqli_prepare(
+            $conexion,
+            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+        );
+        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_execute($stmtHist);
+        mysqli_stmt_close($stmtHist);
     }
 }
 // Cambiar estado activo/inactivo
@@ -76,7 +93,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
 
         $admin = $_SESSION['usuario'];
         $accion = ($nuevo_estado === 'activo') ? "Activó cuenta del usuario ID $id_estado" : "Desactivó cuenta del usuario ID $id_estado";
-        mysqli_query($conexion, "INSERT INTO historial (usuario, accion) VALUES ('$admin', '$accion')");
+        $fecha = date('Y-m-d H:i:s');  // hora local
+
+        $stmtHist = mysqli_prepare(
+            $conexion,
+            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+        );
+        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_execute($stmtHist);
+        mysqli_stmt_close($stmtHist);
 
         header("Location: admin_panel.php");
         exit();
@@ -149,7 +174,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id_estado'], $_POST['
         // Registrar en historial
         $admin = $_SESSION['usuario'];
         $accion = ($nuevo_estado === 'activo') ? "Activó cuenta del usuario ID $id_estado" : "Desactivó cuenta del usuario ID $id_estado";
-        mysqli_query($conexion, "INSERT INTO historial (usuario, accion) VALUES ('$admin', '$accion')");
+        $fecha = date('Y-m-d H:i:s');  // hora local
+
+        $stmtHist = mysqli_prepare(
+            $conexion,
+            "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+        );
+        mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+        mysqli_stmt_execute($stmtHist);
+        mysqli_stmt_close($stmtHist);
     }
 }
 

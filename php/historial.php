@@ -219,13 +219,13 @@ Swal.fire({
                 </tr>
             </thead>
             <tbody>
-                <?php while ($fila = mysqli_fetch_assoc($historial)): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($fila['fecha']); ?></td>
-                        <td><?php echo htmlspecialchars($fila['usuario'] ?: '(desconocido)'); ?></td>
-                        <td><?php echo htmlspecialchars($fila['accion']); ?></td>
-                    </tr>
-                <?php endwhile; ?>
+            <?php while ($fila = mysqli_fetch_assoc($historial)): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($fila['fecha']  ?? '(sin fecha)'); ?></td>
+                    <td><?php echo htmlspecialchars($fila['usuario'] ?? '(desconocido)'); ?></td>
+                    <td><?php echo htmlspecialchars($fila['accion']  ?? ''); ?></td>
+                </tr>
+            <?php endwhile; ?>
             </tbody>
         </table>
         <a href="admin_panel.php" class="volver">← Volver al panel</a>

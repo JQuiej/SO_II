@@ -152,13 +152,13 @@ $ultimos_logs = mysqli_query($conexion, "SELECT * FROM historial ORDER BY fecha 
                 </tr>
             </thead>
             <tbody>
-                <?php while ($log = mysqli_fetch_assoc($ultimos_logs)): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($log['fecha']); ?></td>
-                        <td><?php echo htmlspecialchars($log['usuario'] ?: '(desconocido)'); ?></td>
-                        <td><?php echo htmlspecialchars($log['accion']); ?></td>
-                    </tr>
-                <?php endwhile; ?>
+            <?php while ($log = mysqli_fetch_assoc($ultimos_logs)): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($log['fecha']  ?? ''); ?></td>
+                    <td><?php echo htmlspecialchars($log['usuario'] ?? '(desconocido)'); ?></td>
+                    <td><?php echo htmlspecialchars($log['accion']  ?? ''); ?></td>
+                </tr>
+            <?php endwhile; ?>
             </tbody>
         </table>
 
