@@ -75,8 +75,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     mysqli_stmt_execute($update);
     $accion = "Actualizó su perfil";
-    mysqli_query($conexion, "INSERT INTO historial (usuario, accion) VALUES ('$usuario', '$accion')");
+    $fecha = date('Y-m-d H:i:s');  // hora local
 
+    $stmtHist = mysqli_prepare(
+        $conexion,
+        "INSERT INTO historial (`usuario`,`accion`,`fecha`) VALUES (?, ?, ?)"
+    );
+    mysqli_stmt_bind_param($stmtHist, "sss", $fila['usuario'], $accion, $fecha);
+    mysqli_stmt_execute($stmtHist);
+    mysqli_stmt_close($stmtHist);
+
+    // Redirigir a la página de bienvenida
+    if ($nuevo_avatar) {
+        $avatar_url = $nuevo_avatar;
+    }
+
+    // Actualizar la sesión
+    $_SESSION['nombre_completo'] = $nuevo_nombre;
+    $_SESSION['telefono'] = $nuevo_telefono;
+    $_SESSION['avatar_url'] = $avatar_url;
+
+    // Redirigir a la página de bienvenida
     
 header("Location: bienvenida.php?perfil_actualizado=1");
 exit;
