@@ -72,8 +72,8 @@ $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FRO
 $row    = mysqli_fetch_assoc($result);
 $nextId = $row['next_id'];
 // Insertar usuario
-$insertar = mysqli_prepare($conexion, "INSERT INTO usuarios (id, nombre_completo, correo, usuario, contrasena, telefono, avatar_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
-mysqli_stmt_bind_param($insertar, "issssss",$nextId, $nombre_completo, $correo, $usuario, $contrasena_segura, $telefono, $avatar_url);
+$insertar = mysqli_prepare($conexion, "INSERT INTO usuarios (id, nombre_completo, correo, usuario, contrasena, telefono, avatar_url,rol, estado) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+mysqli_stmt_bind_param($insertar, "issssssss",$nextId, $nombre_completo, $correo, $usuario, $contrasena_segura, $telefono, $avatar_url,'usuario', 'activo');
 mysqli_stmt_execute($insertar);
 
 if (mysqli_stmt_affected_rows($insertar) > 0) {
