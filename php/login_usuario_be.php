@@ -35,19 +35,24 @@ if ($res && mysqli_num_rows($res) === 1) {
         $_SESSION['rol']     = $fila['rol'];
         $_SESSION['id']      = $fila['id'];
 
-// ahora registramos en historial con una prepared statement
+        // calculamos manualmente el próximo ID
+        $result = mysqli_query($conexion, "SELECT COALESCE(MAX(id),0) + 1 AS next_id FROM historial");
+        $row    = mysqli_fetch_assoc($result);
+        $nextId = $row['next_id'];
+
+        // ahora registramos en historial usando ese ID
         $accion = "Inició sesión";
         $stmtHist = mysqli_prepare(
-        $conexion,
-        "INSERT INTO historial (`usuario`,`accion`) VALUES (?, ?)"
+            $conexion,
+            "INSERT INTO historial (id, usuario, accion) VALUES (?, ?, ?)"
         );
-        mysqli_stmt_bind_param($stmtHist, "ss", $fila['usuario'], $accion);
+        mysqli_stmt_bind_param($stmtHist, "iss", $nextId, $fila['usuario'], $accion);
         mysqli_stmt_execute($stmtHist);
         mysqli_stmt_close($stmtHist);
 
-        // y redirigimos…
+        // redirigimos…
         header("Location: ../php/bienvenida.php");
-    exit();
+        exit();
     } else {
         header("Location: ../index.php?error=Contraseña+incorrecta");
         exit();
